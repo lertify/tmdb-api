@@ -3,10 +3,9 @@
 namespace Lertify\TMDb\Tests\Api;
 
 use Lertify\TMDb\Client;
-use Lertify\TMDb\Api\Data\Genre;
 use Exception;
 
-class SearchTest extends \PHPUnit_Framework_TestCase
+class GenresTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Client
@@ -36,13 +35,36 @@ class SearchTest extends \PHPUnit_Framework_TestCase
     public function testAll()
     {
         $list = $this->object->genres()->all();
-        foreach($list AS $genre) {
-            /** @var $genre Genre */
-            echo $genre->name;
-            echo $genre->name();
-            echo $genre->getName();
-            echo $genre->get('name');
-        }
+
+        $this->assertInstanceOf('Lertify\TMDb\Api\Data\ArrayCollection', $list, 'Genres list is not a array collection');
+
+        $this->assertFalse( $list->isEmpty() , 'Genres list is empty' );
+
+        $this->assertInstanceOf('Lertify\TMDb\Api\Data\Genre\Genre', $list->first());
+    }
+
+    /**
+     * @covers {className}::{origMethodName}
+     */
+    public function testMovies()
+    {
+        $list = $this->object->genres()->all();
+
+        $genre = $list->first();
+
+        $list_by_object = $this->object->genres()->movies( $genre );
+
+        $this->assertInstanceOf('Lertify\TMDb\Api\Data\PagedCollection', $list_by_object, 'Genre movies list is not a paged collection, retrieved by object');
+
+        $this->assertFalse( $list_by_object->isEmpty() , 'Genre movies list is empty, retrieved by object' );
+
+        $list_by_id = $this->object->genres()->movies( $genre->getId() );
+
+        $this->assertInstanceOf('Lertify\TMDb\Api\Data\PagedCollection', $list_by_id, 'Genre movies list is not a paged collection, retrieved by id');
+
+        $this->assertFalse( $list_by_id->isEmpty() , 'Genre movies list is empty, retrieved by id' );
+
+        $this->assertEmpty( array_diff_key( $list_by_object->page(1)->getKeys(), $list_by_id->page(1)->getKeys() ), 'Genre movies list retrieved by object and id do not match' );
     }
 
 }

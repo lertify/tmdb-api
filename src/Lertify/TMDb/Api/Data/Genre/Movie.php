@@ -1,12 +1,21 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: stanislavprokopov
- * Date: 8/18/12
- * Time: 3:31 PM
- * To change this template use File | Settings | File Templates.
- */
-class Movie
+
+namespace Lertify\TMDb\Api\Data\Genre;
+
+use Lertify\TMDb\Api\Data\AbstractData;
+
+class Movie extends AbstractData
 {
 
+    public $id;
+    public $title;
+    public $original_title;
+    public $release_date;
+    public $backdrop_path;
+    public $poster_path;
+
+    public $vote_average;
+    public $vote_count;
+
 }
+

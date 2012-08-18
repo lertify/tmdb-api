@@ -9,14 +9,19 @@ use ArrayAccess;
 
 interface Collection extends Countable, IteratorAggregate, ArrayAccess
 {
-    /**
-     * An array containing the entries of this collection.
-     *
-     * @var array
-     */
-    private $_elements;
 
-
-    public function add();
+    function get($key);
+    function add($item);
+    function set($key, $value);
+    function remove($key);
+    function clear();
+    function key();
+    function current();
+    function first();
+    function next();
+    function last();
+    function isEmpty();
+    function hasKey($key);
+    function toArray();
 
 }

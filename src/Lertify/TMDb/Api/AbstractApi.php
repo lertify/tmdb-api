@@ -25,7 +25,7 @@ abstract class AbstractApi implements ApiInterface
     /**
      * {@inheritDoc}
      */
-    protected function get($path, array $parameters = array(), $requestOptions = array())
+    public function get($path, array $parameters = array(), $requestOptions = array())
     {
         return $this->client->get($path, $parameters, $requestOptions);
     }

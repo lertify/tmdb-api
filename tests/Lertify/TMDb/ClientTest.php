@@ -34,7 +34,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetConfiguration()
     {
-        throw new Exception('TODO Implement Me');
+
     }
 
 }
