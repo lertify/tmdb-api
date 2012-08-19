@@ -16,10 +16,11 @@ class Companies extends AbstractApi
      * @link http://help.themoviedb.org/kb/api/company-info
      *
      * @param integer $id ID of the company
-     * @return Company
+     * @return Company|null
      */
     public function getInfo( $id ) {
         $company = $this->get('company/' . $id);
+        if(!isset($company['id'])) return null;
         return new Company($company);
     }
 

@@ -2,10 +2,7 @@
 
 namespace Lertify\TMDb\Api\Data;
 
-use Closure;
-use Countable;
-use IteratorAggregate;
-use ArrayAccess;
+use Countable, IteratorAggregate, ArrayAccess;
 
 interface Collection extends Countable, IteratorAggregate, ArrayAccess
 {

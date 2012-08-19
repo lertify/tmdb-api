@@ -18,11 +18,12 @@ class People extends AbstractApi
      * @link http://help.themoviedb.org/kb/api/person-info
      *
      * @param integer $id ID of the person
-     * @return Person
+     * @return Person|null
      */
     public function getInfo( $id ) {
-       $person = $this->get('person/' . $id);
-       return new Person($person);
+        $person = $this->get('person/' . $id);
+        if(!isset($person['id'])) return null;
+        return new Person($person);
     }
 
     /**

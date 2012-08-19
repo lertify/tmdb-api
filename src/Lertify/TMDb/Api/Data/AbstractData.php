@@ -2,8 +2,7 @@
 
 namespace Lertify\TMDb\Api\Data;
 
-use Serializable;
-use Exception;
+use Serializable, Exception;
 
 abstract class AbstractData
 {
