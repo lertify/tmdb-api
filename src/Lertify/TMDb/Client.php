@@ -115,4 +115,17 @@ class Client
         return $this->apis['companies'];
     }
 
+    /**
+     * @return Api\People
+     */
+    public function people()
+    {
+        if ( ! isset( $this->apis['people'] ) )
+        {
+            $this->apis['people'] = new Api\People( $this );
+        }
+
+        return $this->apis['people'];
+    }
+
 }
