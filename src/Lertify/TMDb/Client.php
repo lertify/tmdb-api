@@ -128,4 +128,17 @@ class Client
         return $this->apis['people'];
     }
 
+    /**
+     * @return Api\Collections
+     */
+    public function collections()
+    {
+        if ( ! isset( $this->apis['collections'] ) )
+        {
+            $this->apis['collections'] = new Api\Collections( $this );
+        }
+
+        return $this->apis['collections'];
+    }
+
 }
