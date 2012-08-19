@@ -4,6 +4,7 @@ namespace Lertify\TMDb;
 
 use Lertify\TMDb\Api;
 use Lertify\TMDb\Api\ApiInterface;
+use Lertify\TMDb\Exception\NotFoundException;
 
 class Client
 {
@@ -64,14 +65,28 @@ class Client
             CURLOPT_URL => $this->getApiUrl().$path.'?'.$query,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
-            CURLOPT_FAILONERROR => true,
+            CURLOPT_FAILONERROR => false,
             CURLOPT_HTTPHEADER => array(
                 'Accept: application/json',
                 'Content-type: application/json'
             ),
         ));
 
-        return json_decode( curl_exec($ch), true );
+        $response = curl_exec($ch);
+
+        if(curl_errno($ch)) {
+            throw new \RuntimeException( curl_error($ch) );
+        }
+
+        $response = json_decode( $response, true );
+
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if( $http_code === 404 ) {
+            throw new NotFoundException( (isset($response['status_message']) ? $response['status_message'] : 'Unknown error message') );
+        }
+
+        return $response;
     }
 
     /**
@@ -85,6 +100,19 @@ class Client
         }
 
         return $this->apis['genres'];
+    }
+
+    /**
+     * @return Api\Companies
+     */
+    public function companies()
+    {
+        if ( ! isset( $this->apis['companies'] ) )
+        {
+            $this->apis['companies'] = new Api\Companies( $this );
+        }
+
+        return $this->apis['companies'];
     }
 
 }
