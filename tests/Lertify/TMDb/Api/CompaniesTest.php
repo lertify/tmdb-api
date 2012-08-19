@@ -43,13 +43,13 @@ class CompaniesTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMovies()
     {
-        $list_by_object = $this->object->companies()->getMovies( 1 );
+        $list_by_object = $this->object->companies()->getMovies(1);
 
         $this->assertInstanceOf('Lertify\TMDb\Api\Data\PagedCollection', $list_by_object, 'Company movies list is not a paged collection, retrieved by object');
 
         $this->assertFalse( $list_by_object->isEmpty() , 'Company movies list is empty, retrieved by object' );
 
-        $list_by_id = $this->object->companies()->getMovies( 1 );
+        $list_by_id = $this->object->companies()->getMovies(1);
 
         $this->assertInstanceOf('Lertify\TMDb\Api\Data\PagedCollection', $list_by_id, 'Company movies list is not a paged collection, retrieved by id');
 

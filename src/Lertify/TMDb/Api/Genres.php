@@ -14,6 +14,7 @@ class Genres extends AbstractApi
      * Get list of genres
      *
      * @link http://help.themoviedb.org/kb/api/genre-list
+     *
      * @return ArrayCollection
      */
     public function getList() {

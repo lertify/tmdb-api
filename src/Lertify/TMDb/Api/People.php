@@ -28,6 +28,9 @@ class People extends AbstractApi
 
     /**
      * Get person credits by ID or Person
+     *
+     * @link http://help.themoviedb.org/kb/api/person-credits
+     *
      * @param Person|integer $person ID of the person
      * @return Person\Credit|null
      */
@@ -56,6 +59,9 @@ class People extends AbstractApi
 
     /**
      * Get person profile images
+     *
+     * @link http://help.themoviedb.org/kb/api/person-images
+     *
      * @param Person|integer $person ID of the person
      * @return ArrayCollection|null
      */
