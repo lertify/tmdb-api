@@ -15,9 +15,10 @@ class Companies extends AbstractApi
      *
      * @link http://help.themoviedb.org/kb/api/company-info
      *
+     * @param integer $id ID of the company
      * @return Company
      */
-    public function info( $id ) {
+    public function getInfo( $id ) {
         $company = $this->get('company/' . $id);
         return new Company($company);
     }
@@ -30,7 +31,7 @@ class Companies extends AbstractApi
      * @param Company|integer $company ID of the company
      * @return PagedCollection
      */
-    public function movies( $company ) {
+    public function getMovies( $company ) {
         if($company instanceof Company) $id = $company->getId();
         else $id = $company;
 

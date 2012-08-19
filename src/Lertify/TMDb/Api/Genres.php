@@ -16,7 +16,7 @@ class Genres extends AbstractApi
      * @link http://help.themoviedb.org/kb/api/genre-list
      * @return ArrayCollection
      */
-    public function all() {
+    public function getList() {
         $results = $this->get('genre/list');
 
         $list = new ArrayCollection();
@@ -39,7 +39,7 @@ class Genres extends AbstractApi
      * @param Genre|integer $genre ID of the genre
      * @return PagedCollection|null
      */
-    public function movies($genre) {
+    public function getMovies($genre) {
 
         if($genre instanceof Genre) $id = $genre->getId();
         else $id = $genre;

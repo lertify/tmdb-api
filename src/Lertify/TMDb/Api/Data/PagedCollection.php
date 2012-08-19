@@ -2,7 +2,7 @@
 
 namespace Lertify\TMDb\Api\Data;
 
-use Closure, ArrayIterator, InvalidArgumentException;
+use Closure, InvalidArgumentException;
 
 class PagedCollection
 {
@@ -34,7 +34,6 @@ class PagedCollection
     }
 
     private function loadPage( $number ) {
-        /** @var $page_results ArrayCollection */
         $page_data = call_user_func($this->_callback, $number);
 
         if( $page_data === null ) return false;

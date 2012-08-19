@@ -32,24 +32,24 @@ class CompaniesTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers {className}::{origMethodName}
      */
-    public function testInfo()
+    public function testGetInfo()
     {
-        $company = $this->object->companies()->info(1);
+        $company = $this->object->companies()->getInfo(1);
         $this->assertInstanceOf('Lertify\TMDb\Api\Data\Company\Company', $company, 'Object is not an instance of Company');
     }
 
     /**
      * @covers {className}::{origMethodName}
      */
-    public function testMovies()
+    public function testGetMovies()
     {
-        $list_by_object = $this->object->companies()->movies( 1 );
+        $list_by_object = $this->object->companies()->getMovies( 1 );
 
         $this->assertInstanceOf('Lertify\TMDb\Api\Data\PagedCollection', $list_by_object, 'Company movies list is not a paged collection, retrieved by object');
 
         $this->assertFalse( $list_by_object->isEmpty() , 'Company movies list is empty, retrieved by object' );
 
-        $list_by_id = $this->object->companies()->movies( 1 );
+        $list_by_id = $this->object->companies()->getMovies( 1 );
 
         $this->assertInstanceOf('Lertify\TMDb\Api\Data\PagedCollection', $list_by_id, 'Company movies list is not a paged collection, retrieved by id');
 

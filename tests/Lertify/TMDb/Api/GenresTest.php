@@ -32,9 +32,9 @@ class GenresTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers {className}::{origMethodName}
      */
-    public function testAll()
+    public function testGetList()
     {
-        $list = $this->object->genres()->all();
+        $list = $this->object->genres()->getList();
 
         $this->assertInstanceOf('Lertify\TMDb\Api\Data\ArrayCollection', $list, 'Genres list is not a array collection');
 
@@ -46,19 +46,19 @@ class GenresTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers {className}::{origMethodName}
      */
-    public function testMovies()
+    public function testGetMovies()
     {
-        $list = $this->object->genres()->all();
+        $list = $this->object->genres()->getList();
 
         $genre = $list->first();
 
-        $list_by_object = $this->object->genres()->movies( $genre );
+        $list_by_object = $this->object->genres()->getMovies( $genre );
 
         $this->assertInstanceOf('Lertify\TMDb\Api\Data\PagedCollection', $list_by_object, 'Genre movies list is not a paged collection, retrieved by object');
 
         $this->assertFalse( $list_by_object->isEmpty() , 'Genre movies list is empty, retrieved by object' );
 
-        $list_by_id = $this->object->genres()->movies( $genre->getId() );
+        $list_by_id = $this->object->genres()->getMovies( $genre->getId() );
 
         $this->assertInstanceOf('Lertify\TMDb\Api\Data\PagedCollection', $list_by_id, 'Genre movies list is not a paged collection, retrieved by id');
 
