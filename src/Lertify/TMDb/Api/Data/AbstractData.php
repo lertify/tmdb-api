@@ -7,7 +7,7 @@ use Serializable, Exception;
 abstract class AbstractData
 {
 
-    public function __construct($data){
+    public function __construct($data) {
         foreach($data as $key => $value){
             $this->{$key} = $value;
         }
@@ -47,30 +47,37 @@ abstract class AbstractData
 
     public function __set($key, $value)
     {
-        if (property_exists($this, $key)) {
+        $unc_key = $this->uncamelize($key);
+        if (property_exists($this, $unc_key)) {
             $name = 'set' . preg_replace('/_([A-Za-z0-9])/e', strtoupper('\\1'), ucfirst($key));
             if (method_exists($this, $name))
                 $this->{ $name }($value);
             else
-                $this->{ $key } = $value;
+                $this->{ $unc_key } = $value;
                 //throw new Exception("Property '$key' is read-only.");
         } else {
-            throw new Exception("Undefined property ".$key.".");
+            throw new Exception("Undefined property ".$key." (".$unc_key.").");
         }
         return $this;
     }
 
     public function __get($key)
     {
-        if (property_exists($this, $key)) {
+        $unc_key = $this->uncamelize($key);
+        if (property_exists($this, $unc_key)) {
             $name = 'get' . preg_replace('/_([A-Za-z0-9])/e', strtoupper('\\1'), ucfirst($key));
             if (method_exists($this, $name))
                 return $this->{ $name }();
             else
-                return $this->{ $key };
+                return $this->{ $unc_key };
         } else {
-            throw new Exception("Undefined property ".$key.".");
+            throw new Exception("Undefined property ".$key." (".$unc_key.").");
         }
+    }
+
+    private function uncamelize($camel)
+    {
+        return strtolower( preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1_', $camel) );
     }
 
 }

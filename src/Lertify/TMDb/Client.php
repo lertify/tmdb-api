@@ -141,4 +141,17 @@ class Client
         return $this->apis['collections'];
     }
 
+    /**
+     * @return Api\Movies
+     */
+    public function movies()
+    {
+        if ( ! isset( $this->apis['movies'] ) )
+        {
+            $this->apis['movies'] = new Api\Movies( $this );
+        }
+
+        return $this->apis['movies'];
+    }
+
 }
