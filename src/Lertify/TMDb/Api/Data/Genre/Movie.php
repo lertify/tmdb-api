@@ -2,20 +2,10 @@
 
 namespace Lertify\TMDb\Api\Data\Genre;
 
-use Lertify\TMDb\Api\Data\AbstractData;
+use Lertify\TMDb\Api\Data\Movie\ShortInfo;
 
-class Movie extends AbstractData
+class Movie extends ShortInfo
 {
-
-    public $id;
-    public $title;
-    public $original_title;
-    public $release_date;
-    public $backdrop_path;
-    public $poster_path;
-
-    public $vote_average;
-    public $vote_count;
 
 }
 

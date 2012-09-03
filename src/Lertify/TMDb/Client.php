@@ -154,4 +154,17 @@ class Client
         return $this->apis['movies'];
     }
 
+    /**
+     * @return Api\Misc
+     */
+    public function misc()
+    {
+        if ( ! isset( $this->apis['misc'] ) )
+        {
+            $this->apis['misc'] = new Api\Misc( $this );
+        }
+
+        return $this->apis['misc'];
+    }
+
 }

@@ -263,6 +263,7 @@ class Movies extends AbstractApi
      *
      * @param integer|Data\Movie $movie Movie ID or Object
      * @return PagedCollection
+     * @throws Exception\PageNotFoundException
      */
     public function getSimilarMovies($movie) {
         if($movie instanceof Data\Movie) $id = $movie->getId();

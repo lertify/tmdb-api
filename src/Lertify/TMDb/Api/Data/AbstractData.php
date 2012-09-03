@@ -3,14 +3,13 @@
 namespace Lertify\TMDb\Api\Data;
 
 use Serializable, Exception;
+use ReflectionProperty;
 
 abstract class AbstractData
 {
 
-    public function __construct($data) {
-        foreach($data as $key => $value){
-            $this->{$key} = $value;
-        }
+    public function __construct( $data = array() ) {
+        if(!empty($data)) $this->fromArray( $data );
     }
 
     public function __call($key, $arguments) {
@@ -35,7 +34,7 @@ abstract class AbstractData
         }
 
         if(substr($key, 0, 3) == 'set' && count($arguments) == 1) {
-            return $this->__set( lcfirst( substr($key, 3) ) , $arguments[1]);
+            return $this->__set( lcfirst( substr($key, 3) ) , $arguments[0]);
         }
 
         if(substr($key, 0, 3) == 'get' && count($arguments) == 0) {
@@ -49,7 +48,7 @@ abstract class AbstractData
     {
         $unc_key = $this->uncamelize($key);
         if (property_exists($this, $unc_key)) {
-            $name = 'set' . preg_replace('/_([A-Za-z0-9])/e', strtoupper('\\1'), ucfirst($key));
+            $name = 'set' . $this->camelize($key);
             if (method_exists($this, $name))
                 $this->{ $name }($value);
             else
@@ -65,7 +64,7 @@ abstract class AbstractData
     {
         $unc_key = $this->uncamelize($key);
         if (property_exists($this, $unc_key)) {
-            $name = 'get' . preg_replace('/_([A-Za-z0-9])/e', strtoupper('\\1'), ucfirst($key));
+            $name = 'get' . $this->camelize($key);
             if (method_exists($this, $name))
                 return $this->{ $name }();
             else
@@ -73,6 +72,27 @@ abstract class AbstractData
         } else {
             throw new Exception("Undefined property ".$key." (".$unc_key.").");
         }
+    }
+
+    public function toArray() {
+        $values = get_object_vars($this);
+
+        foreach($values AS $key => $value) {
+            $prop = new ReflectionProperty($this, $key);
+            if($prop->isProtected()) unset($values[$key]);
+        }
+
+        return $values;
+    }
+
+    public function fromArray( array $array ) {
+        foreach($array AS $key => $value)
+            $this->{$key} = $value;
+        return $this;
+    }
+
+    private function camelize($word) {
+        return preg_replace('/(^|_)([a-z])/e', 'strtoupper("\\2")', $word);
     }
 
     private function uncamelize($camel)
