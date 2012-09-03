@@ -167,4 +167,17 @@ class Client
         return $this->apis['misc'];
     }
 
+    /**
+     * @return Api\Search
+     */
+    public function search()
+    {
+        if ( ! isset( $this->apis['search'] ) )
+        {
+            $this->apis['search'] = new Api\Search( $this );
+        }
+
+        return $this->apis['search'];
+    }
+
 }
