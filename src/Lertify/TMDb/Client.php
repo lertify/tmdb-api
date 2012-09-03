@@ -180,4 +180,17 @@ class Client
         return $this->apis['search'];
     }
 
+    /**
+     * @return Api\Configuration
+     */
+    public function configuration()
+    {
+        if ( ! isset( $this->apis['configuration'] ) )
+        {
+            $this->apis['configuration'] = new Api\Configuration( $this );
+        }
+
+        return $this->apis['configuration'];
+    }
+
 }

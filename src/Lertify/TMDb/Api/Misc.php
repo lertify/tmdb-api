@@ -26,7 +26,7 @@ class Misc extends AbstractApi
      *
      * @link http://help.themoviedb.org/kb/api/latest-movie
      *
-     * @return MovieData\Movie
+     * @return MiscData\Movie
      * @throws Exception\NotFoundException
      */
     public function getLatestMovie() {
