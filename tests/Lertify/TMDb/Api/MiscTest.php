@@ -2,6 +2,8 @@
 
 namespace Lertify\TMDb\Tests\Api;
 
+use Lertify\TMDb\Api\Data\Authentication\Session;
+use Lertify\TMDb\Api\Data\Movie\ShortInfo AS Movie;
 use Lertify\TMDb\Client;
 use Exception;
 
@@ -87,6 +89,39 @@ class MiscTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Lertify\TMDb\Api\Data\PagedCollection', $list, 'List is not an instance of PagedCollection');
         $this->assertInstanceOf('Lertify\TMDb\Api\Data\ArrayCollection', $list->page(1), 'List page is not an instance of ArrayCollection');
         $this->assertInstanceOf('Lertify\TMDb\Api\Data\Misc\TopRated', $list->page(1)->first(), 'List item is not an instance of TopRated');
+    }
+
+    /**
+     * @covers {className}::{origMethodName}
+     */
+    public function testAddRating()
+    {
+
+        $session_id = $GLOBALS['session_id'];
+
+        $session = new Session(array('session_id' => $session_id));
+
+        $movie_id = 1891;
+
+        $movie = new Movie(array('id' => $movie_id));
+
+        $res = $this->object->misc()->addRating( $session, $movie, 10 );
+
+        $movie_id = 1892;
+
+        $this->object->misc()->addRating( $session_id, $movie_id, 10 );
+
+        $movie_id = 1892;
+
+        $result = false;
+        try {
+            $this->object->misc()->addRating( $session_id, $movie_id, 15 );
+            $result = true;
+        } catch(\InvalidArgumentException $e) {
+
+        }
+
+        $this->assertFalse($result, 'Exceptions should be thrown on incorrect rating value');
     }
 
 }

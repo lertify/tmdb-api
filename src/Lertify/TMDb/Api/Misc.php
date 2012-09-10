@@ -5,6 +5,7 @@ namespace Lertify\TMDb\Api;
 use Lertify\TMDb\Exception;
 use Lertify\TMDb\Api\Data\Misc AS MiscData;
 use Lertify\TMDb\Api\Data\Movie AS MovieData;
+use Lertify\TMDb\Api\Data\Authentication\Session;
 use Lertify\TMDb\Api\Data\ArrayCollection;
 use Lertify\TMDb\Api\Data\PagedCollection;
 
@@ -12,13 +13,36 @@ class Misc extends AbstractApi
 {
 
     /**
-     * Rate a movie
+     * Add movie rating
      *
      * @link http://help.themoviedb.org/kb/api/movie-add-rating
      *
+     * @param string|Session $session Session id or object
+     * @param integer|MovieData\ShortInfo $movie Movie id or object
+     * @param float $rating rating between 1 and 10
+     * @throws \InvalidArgumentException
+     * @return bool
      */
-    public function addRating( $id ) {
-        // TODO
+    public function addRating( $session, $movie, $rating ) {
+        if( $session instanceof Session ) $session_id = $session->getSessionId();
+        else $session_id = $session;
+
+        if( $movie instanceof MovieData\ShortInfo ) $movie_id = $movie->getId();
+        else $movie_id = $movie;
+
+        if( $rating < 1 || $rating > 10) throw new \InvalidArgumentException("Rating should be between 1 and 10");
+
+        $this->get('movie/'.$movie_id.'/rating'
+            , array(
+                'session_id' => $session_id
+            ), array(
+                'post' => array(
+                    'value' => $rating
+                )
+            )
+        );
+
+        return true;
     }
 
     /**

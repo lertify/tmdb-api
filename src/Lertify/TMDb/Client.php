@@ -76,6 +76,13 @@ class Client
             ),
         ));
 
+        if( isset($options['post']) ) {
+            curl_setopt_array($ch, array(
+                CURLOPT_POST => 1,
+                CURLOPT_POSTFIELDS => json_encode($options['post'])
+            ));
+        }
+
         $response = curl_exec($ch);
 
         if(curl_errno($ch)) {
@@ -229,6 +236,19 @@ class Client
         }
 
         return $this->apis['authentication'];
+    }
+
+    /**
+     * @return Api\Account
+     */
+    public function account()
+    {
+        if ( ! isset( $this->apis['account'] ) )
+        {
+            $this->apis['account'] = new Api\Account( $this );
+        }
+
+        return $this->apis['account'];
     }
 
     /**

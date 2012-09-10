@@ -38,8 +38,6 @@ class Authentication extends AbstractApi
     public function getSession($request_token) {
         $session = $this->get('authentication/session/new', array('request_token' => $request_token));
 
-        var_dump($session);
-
         if(!isset($session['success'])) throw new Exception\NotFoundException();
 
         return new Data\Session($session);
